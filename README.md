@@ -1,80 +1,39 @@
-# \## XsltEditor.Sdk
+## XsltEditor.Sdk
 
-# 
+[![NuGet](https://img.shields.io/nuget/v/XsltEditor.Sdk)](https://www.nuget.org/packages/XsltEditor.Sdk)
 
-# \[!\[NuGet](https://img.shields.io/nuget/v/XsltEditor.Sdk)](https://www.nuget.org/packages/XsltEditor.Sdk)
+SDK for building plugins for [XSLT Editor](https://github.com/Rckov/Xslt-Editor).
 
-# 
+### Installation
+```
+dotnet add package XsltEditor.Sdk
+```
 
-# SDK for building plugins for \[XSLT Editor](https://github.com/Rckov/Xslt-Editor).
+### Usage
 
-# 
+```csharp
+using XsltEditor.Sdk;
+using XsltEditor.Sdk.Abstractions;
+using XsltEditor.Sdk.Extensions;
 
-# \### Installation
+public class MyPlugin : PluginBase
+{
+    public override string Name => "My Plugin";
+    public override string Description => "Does something useful";
 
-# ```
+    public override void Execute(IDocumentContext context)
+    {
+        var xml = context.GetDocument(DocumentType.Xml);
+        var xsl = context.GetDocument(DocumentType.Xsl);
 
-# dotnet add package XsltEditor.Sdk
+        // read/write content
+        xml?.Content = ProcessXml(xml.Content);
+    }
+}
+```
 
-# ```
+### Deployment
+Build your plugin and copy the output dll to `plugins/{plugin-name}/` next to the editor executable.
 
-# 
-
-# \### Usage
-
-# 
-
-# ```csharp
-
-# using XsltEditor.Sdk;
-
-# using XsltEditor.Sdk.Abstractions;
-
-# using XsltEditor.Sdk.Extensions;
-
-# 
-
-# public class MyPlugin : PluginBase
-
-# {
-
-# &nbsp;   public override string Name => "My Plugin";
-
-# &nbsp;   public override string Description => "Does something useful";
-
-# 
-
-# &nbsp;   public override void Execute(IDocumentContext context)
-
-# &nbsp;   {
-
-# &nbsp;       var xml = context.GetDocument(DocumentType.Xml);
-
-# &nbsp;       var xsl = context.GetDocument(DocumentType.Xsl);
-
-# 
-
-# &nbsp;       // read/write content
-
-# &nbsp;       xml?.Content = ProcessXml(xml.Content);
-
-# &nbsp;   }
-
-# }
-
-# ```
-
-# 
-
-# \### Deployment
-
-# Build your plugin and copy the output dll to `plugins/{plugin-name}/` next to the editor executable.
-
-# 
-
-# \## License
-
-# \[MIT](LICENSE)
-
-# 
-
+## License
+Licensed under [MIT](LICENSE). [Report an Issue](https://github.com/Rckov/Xslt-Editor.Sdk/issues)
